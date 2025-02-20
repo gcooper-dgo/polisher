@@ -60,11 +60,11 @@ class Settings():
         # TODO: read Settings file
             if line.startswith('Max Quantity'):
                 quantity = int(line.split(',')[1])
-            if line.startswith('Film'):
+            elif line.startswith('Film'):
                 films = line.split(',')[1:]
-            if line.startswith('Pad'):
+            elif line.startswith('Pad'):
                 pads = line.split(',')[1:]
-            if line.startswith('Lubricant'):
+            elif line.startswith('Lubricant'):
                 lubricants = line.split(',')[1:]
         return Settings(quantity, films, pads, lubricants)
     
@@ -203,43 +203,46 @@ class Recipe():
             for line in step:
                 if line.startswith('rRecipeStepTime '):
                     time = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepSpeed '):
+                elif line.startswith('rRecipeStepSpeed '):
                     speed = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepSpeedRamp '):
+                elif line.startswith('rRecipeStepSpeedRamp '):
                     speed_ramp = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepPressure '):
+                elif line.startswith('rRecipeStepPressure '):
                     pressure = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepPressureRamp '):
+                elif line.startswith('rRecipeStepPressureRamp '):
                     pressure_ramp = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepFCI '):
+                elif line.startswith('rRecipeStepFCI '):
                     fci = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepLowerSpeedLimit '):
+                elif line.startswith('rRecipeStepLowerSpeedLimit '):
                     lower_speed_limit = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepUpperSpeedLimit '):
+                elif line.startswith('rRecipeStepUpperSpeedLimit '):
                     upper_speed_limit = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepLowerPressureLimit '):
+                elif line.startswith('rRecipeStepLowerPressureLimit '):
                     lower_pressure_limit = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepUpperPressureLimit '):
+                elif line.startswith('rRecipeStepUpperPressureLimit '):
                     upper_pressure_limit = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepFixtureWeight '):
+                elif line.startswith('rRecipeStepFixtureWeight '):
                     fixture_weight = line.split(":=")[-1].strip()
-                if line.startswith('intRecipeStepOpCode '):
+                elif line.startswith('intRecipeStepOpCode '):
                     op_code = line.split(":=")[-1].strip()
-                if line.startswith('strRecipeStepFilm '):
+                elif line.startswith('strRecipeStepFilm '):
                     film = line.split(":=")[-1].strip()
-                if line.startswith('strRecipeStepLubricant '):
+                elif line.startswith('strRecipeStepLubricant '):
                     lubricant = line.split(":=")[-1].strip()
-                if line.startswith('strRecipeStepPad '):
+                elif line.startswith('strRecipeStepPad '):
                     pad = line.split(":=")[-1].strip()
-                if line.startswith('strRecipeStepDescription1 '):
+                elif line.startswith('strRecipeStepDescription1 '):
                     description1 = line.split(":=")[-1].strip()
-                if line.startswith('strRecipeStepDescription2 '):
+                elif line.startswith('strRecipeStepDescription2 '):
                     description2 = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepSpeedRampDn '):
+                elif line.startswith('rRecipeStepSpeedRampDn '):
                     speed_ramp_dn = line.split(":=")[-1].strip()
-                if line.startswith('rRecipeStepPressureRampDn '):
+                elif line.startswith('rRecipeStepPressureRampDn '):
                     pressure_ramp_dn = line.split(":=")[-1].strip()
-                    
+                else:
+                    print(f"Unknown setting in {step}:") 
+                    print(line)
+
             recipe[step_number] = RecipeStep(time, pressure)
             recipe[step_number].time = time
             recipe[step_number].speed = speed
