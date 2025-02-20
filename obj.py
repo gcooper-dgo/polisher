@@ -40,7 +40,7 @@ class Settings():
     def write(self):
         if domaille_path():
             try:
-                with open(f'{domaille_path()}{os.sep}Settings.txt', 'x') as f:
+                with open(f'{domaille_path()}{os.sep}Settings.txt', 'w') as f:
                     f.write(self.file_format())
             except Exception as e:
                 print('FAILED: ', e)
