@@ -34,7 +34,7 @@ class Settings():
         max_q = f"Max Quantity,{self.max_quantity}\n"
         films = "Film," + ",".join(self.film) + "\n"
         pads = "Pad," + ",".join(self.pad) + "\n"
-        lube = "Lubricant" + ",".join(self.lubricant) + "\n"
+        lube = "Lubricant," + ",".join(self.lubricant) + "\n"
         return f"{max_q}{films}{pads}{lube}"
         
     def write(self):
