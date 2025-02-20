@@ -61,11 +61,11 @@ class Settings():
             if line.startswith('Max Quantity'):
                 quantity = int(line.split(',')[1])
             elif line.startswith('Film'):
-                films = line.split(',')[1:]
+                films = [film.strip() for film in line.split(',')[1:]]
             elif line.startswith('Pad'):
-                pads = line.split(',')[1:]
+                pads = [pad.strip() for pad in line.split(',')[1:]]
             elif line.startswith('Lubricant'):
-                lubricants = line.split(',')[1:]
+                lubricants = [lube.strip() for lube in line.split(',')[1:]]
         return Settings(quantity, films, pads, lubricants)
     
 
