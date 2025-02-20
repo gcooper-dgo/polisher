@@ -70,7 +70,7 @@ class Settings():
     
 
 class RecipeStep():
-    def __init__(self, time=75, pressure=16):
+    def __init__(self, time=75, pressure=16, **kwargs):
         self.time = time
         self.speed = 110
         self.speed_ramp = 1
@@ -90,6 +90,9 @@ class RecipeStep():
         self.description2 = ""
         self.speed_ramp_dn = 1
         self.pressure_ramp_dn = 1
+        for k,v in kwargs.items():
+            setattr(self, k, v)
+            
 
     def __repr__(self):
         return f"<Step({self.time}s @ {self.pressure}lbs.)>"
