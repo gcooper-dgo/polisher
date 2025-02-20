@@ -2,12 +2,13 @@ import os
 
 def domaille_path() -> bool:
     ''' check to see if the path directories exist'''
-    if os.path.isdir('Domaille/Processes/Steps'):
+    if os.path.isdir(f'Domaille{os.sep}Processes{os.sep}Steps'):
         return f"{os.getcwd()}{os.sep}Domaille"
     else:
         try:
-            os.makedirs('Domaille/Processes/Steps')
-            Settings.default().write()
+            os.makedirs(f'Domaille{os.sep}Processes{os.sep}Steps')
+            if not os.path.exists(f"Domaille{os.sep}Settings.txt"):
+                Settings.default().write()
         except Exception as e:
             print('FAILED: ', e)
             raise e
@@ -27,8 +28,7 @@ class Settings():
                             ['<None>', '60 Duro Blue', '65 Duro Dark Blue',
                              '70 Duro Violet', '75 Duro Brown', '80 Duro Green',
                              '85 Duro Gray', '90 Duro Black'],
-                            ['<None>', 'DI Water']
-                        )
+                            ['<None>', 'DI Water'])
     
     def file_format(self): # (it's a CSV)
         max_q = f"Max Quantity,{self.max_quantity}\n"
@@ -46,7 +46,28 @@ class Settings():
                 print('FAILED: ', e)
                 raise e
             else: print('done.') 
-
+    
+    @staticmethod
+    def read() -> 'Settings':
+        file = f"{domaille_path()}{os.sep}Settings.txt"
+        try:
+            with open(file, 'r', encoding='ascii') as f:
+                settings = f.readlines()
+        except Exception as e:
+            print('ERROR', e)
+            return None
+        for line in settings:
+        # TODO: read Settings file
+            if line.startswith('Max Quantity'):
+                quantity = int(line.split(',')[1])
+            if line.startswith('Film'):
+                films = line.split(',')[1:]
+            if line.startswith('Pad'):
+                pads = line.split(',')[1:]
+            if line.startswith('Lubricant'):
+                lubricants = line.split(',')[1:]
+        return Settings(quantity, films, pads, lubricants)
+    
 
 class RecipeStep():
     def __init__(self, time=75, pressure=16):
@@ -94,16 +115,15 @@ class RecipeStep():
         speed_ramp_dn = f"rRecipeStepSpeedRampDn := {self.speed_ramp_dn}\n"
         pressure_ramp_dn = f"rRecipeStepPressureRampDn := {self.pressure_ramp_dn}\n"
 
-        file_formatted_settings = (f"{time}{speed}{speed_ramp}{pressure}{pressure_ramp}"
-                                   f"{fci}{lower_speed_limit}{upper_speed_limit}"
-                                   f"{lower_pressure_limit}{upper_pressure_limit}"
-                                   f"{fixture_weight}{op_code}{film}{lubricant}{pad}"
-                                   f"{desc1}{desc2}{speed_ramp_dn}{pressure_ramp_dn}"
-                                   )
-        return file_formatted_settings
+        return (f"{time}{speed}{speed_ramp}{pressure}{pressure_ramp}"
+                f"{fci}{lower_speed_limit}{upper_speed_limit}"
+                f"{lower_pressure_limit}{upper_pressure_limit}"
+                f"{fixture_weight}{op_code}{film}{lubricant}{pad}"
+                f"{desc1}{desc2}{speed_ramp_dn}{pressure_ramp_dn}")
+        
 
 class Recipe():
-    def __init__(self, description:str, no_of_steps:int = 3, quantity:int = 32, rework_step:int = 1, *steps):
+    def __init__(self, description:str, no_of_steps:int = 3, quantity:int = 32, rework_step:int = 1, *steps:RecipeStep):
         no_of_steps = int(no_of_steps)
         self.description = description
         self.no_of_steps = no_of_steps
@@ -152,99 +172,101 @@ class Recipe():
             raise e
         else: print('done.')
 
-def read_recipe_from_file(name:str) -> Recipe:
-    # get variables from files and create Recipe()
-    file = f"{domaille_path()}{os.sep}Processes{os.sep}{name}"
-    try:
-        with open(file, 'r', encoding='ascii') as f:
-            recipe = f.readlines()
-    except Exception as e:
-        print('ERROR', e)
-        raise e
-    for line in recipe:
-        if line.startswith('strRecipeDescription'):
-            description = line.split(":=")[-1].strip()
-        elif line.startswith('intRecipeNoOfSteps'):
-            no_of_steps = line.split(":=")[-1].strip()
-        elif line.startswith('intRecipeQty'):
-            quantity = line.split(":=")[-1].strip()
-        elif line.startswith('intRecipeReworkStep'):
-            rework_step = line.split(":=")[-1].strip()
-    recipe = Recipe(description, no_of_steps, quantity, rework_step)
-    for step_number in range(1,recipe.no_of_steps+1):
+    @staticmethod
+    def read(name:str) -> 'Recipe':
+        # get variables from files and create Recipe()
+        file = f"{domaille_path()}{os.sep}Processes{os.sep}{name}"
         try:
-            file = f"{domaille_path()}{os.sep}Processes{os.sep}Steps{os.sep}{name}.{step_number:0>3}"
             with open(file, 'r', encoding='ascii') as f:
-                step = f.readlines()
+                recipe = f.readlines()
         except Exception as e:
             print('ERROR', e)
-            raise e    
-        for line in step:
-            if line.startswith('rRecipeStepTime'):
-                time = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepSpeed'):
-                speed = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepSpeedRamp'):
-                speed_ramp = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepPressure'):
-                pressure = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepPressureRamp'):
-                pressure_ramp = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepFCI'):
-                fci = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepLowerSpeedLimit'):
-                lower_speed_limit = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepUpperSpeedLimit'):
-                upper_speed_limit = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepLowerPressureLimit'):
-                lower_pressure_limit = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepUpperPressureLimit'):
-                upper_pressure_limit = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepFixtureWeight'):
-                fixture_weight = line.split(":=")[-1].strip()
-            if line.startswith('intRecipeStepOpCode'):
-                op_code = line.split(":=")[-1].strip()
-            if line.startswith('strRecipeStepFilm'):
-                film = line.split(":=")[-1].strip()
-            if line.startswith('strRecipeStepLubricant'):
-                lubricant = line.split(":=")[-1].strip()
-            if line.startswith('strRecipeStepPad'):
-                pad = line.split(":=")[-1].strip()
-            if line.startswith('strRecipeStepDescription1'):
-                description1 = line.split(":=")[-1].strip()
-            if line.startswith('strRecipeStepDescription2'):
-                description2 = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepSpeedRampDn'):
-                speed_ramp_dn = line.split(":=")[-1].strip()
-            if line.startswith('rRecipeStepPressureRampDn'):
-                pressure_ramp_dn = line.split(":=")[-1].strip()
-                
-        recipe[step_number] = RecipeStep(time, pressure)
-        recipe[step_number].time = time
-        recipe[step_number].speed = speed
-        recipe[step_number].speed_ramp = speed_ramp
-        recipe[step_number].pressure = pressure
-        recipe[step_number].pressure_ramp = pressure_ramp
-        recipe[step_number].fci = fci
-        recipe[step_number].lower_speed_limit = lower_speed_limit
-        recipe[step_number].upper_speed_limit = upper_speed_limit
-        recipe[step_number].lower_pressure_limit = lower_pressure_limit
-        recipe[step_number].upper_pressure_limit = upper_pressure_limit
-        recipe[step_number].fixture_weight = fixture_weight
-        recipe[step_number].op_code = op_code
-        recipe[step_number].film = film
-        recipe[step_number].lubricant = lubricant
-        recipe[step_number].pad = pad
-        recipe[step_number].description1 = description1
-        recipe[step_number].description2 = description2
-        recipe[step_number].speed_ramp_dn = speed_ramp_dn
-        recipe[step_number].pressure_ramp_dn = pressure_ramp_dn
-    return recipe
+            raise e
+        for line in recipe:
+            if line.startswith('strRecipeDescription'):
+                description = line.split(":=")[-1].strip()
+            elif line.startswith('intRecipeNoOfSteps'):
+                no_of_steps = line.split(":=")[-1].strip()
+            elif line.startswith('intRecipeQty'):
+                quantity = line.split(":=")[-1].strip()
+            elif line.startswith('intRecipeReworkStep'):
+                rework_step = line.split(":=")[-1].strip()
+        recipe = Recipe(description, no_of_steps, quantity, rework_step)
+        for step_number in range(1,recipe.no_of_steps+1):
+            try:
+                file = f"{domaille_path()}{os.sep}Processes{os.sep}Steps{os.sep}{name}.{step_number:0>3}"
+                with open(file, 'r', encoding='ascii') as f:
+                    step = f.readlines()
+            except Exception as e:
+                print('ERROR', e)
+                raise e    
+            for line in step:
+                if line.startswith('rRecipeStepTime '):
+                    time = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepSpeed '):
+                    speed = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepSpeedRamp '):
+                    speed_ramp = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepPressure '):
+                    pressure = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepPressureRamp '):
+                    pressure_ramp = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepFCI '):
+                    fci = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepLowerSpeedLimit '):
+                    lower_speed_limit = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepUpperSpeedLimit '):
+                    upper_speed_limit = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepLowerPressureLimit '):
+                    lower_pressure_limit = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepUpperPressureLimit '):
+                    upper_pressure_limit = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepFixtureWeight '):
+                    fixture_weight = line.split(":=")[-1].strip()
+                if line.startswith('intRecipeStepOpCode '):
+                    op_code = line.split(":=")[-1].strip()
+                if line.startswith('strRecipeStepFilm '):
+                    film = line.split(":=")[-1].strip()
+                if line.startswith('strRecipeStepLubricant '):
+                    lubricant = line.split(":=")[-1].strip()
+                if line.startswith('strRecipeStepPad '):
+                    pad = line.split(":=")[-1].strip()
+                if line.startswith('strRecipeStepDescription1 '):
+                    description1 = line.split(":=")[-1].strip()
+                if line.startswith('strRecipeStepDescription2 '):
+                    description2 = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepSpeedRampDn '):
+                    speed_ramp_dn = line.split(":=")[-1].strip()
+                if line.startswith('rRecipeStepPressureRampDn '):
+                    pressure_ramp_dn = line.split(":=")[-1].strip()
+                    
+            recipe[step_number] = RecipeStep(time, pressure)
+            recipe[step_number].time = time
+            recipe[step_number].speed = speed
+            recipe[step_number].speed_ramp = speed_ramp
+            recipe[step_number].pressure = pressure
+            recipe[step_number].pressure_ramp = pressure_ramp
+            recipe[step_number].fci = fci
+            recipe[step_number].lower_speed_limit = lower_speed_limit
+            recipe[step_number].upper_speed_limit = upper_speed_limit
+            recipe[step_number].lower_pressure_limit = lower_pressure_limit
+            recipe[step_number].upper_pressure_limit = upper_pressure_limit
+            recipe[step_number].fixture_weight = fixture_weight
+            recipe[step_number].op_code = op_code
+            recipe[step_number].film = film
+            recipe[step_number].lubricant = lubricant
+            recipe[step_number].pad = pad
+            recipe[step_number].description1 = description1
+            recipe[step_number].description2 = description2
+            recipe[step_number].speed_ramp_dn = speed_ramp_dn
+            recipe[step_number].pressure_ramp_dn = pressure_ramp_dn
+        return recipe
 
 
 if __name__=="__main__":
 
-    recipe = recipe_from_file('test')
+    step1, step2, step3 = RecipeStep(25), RecipeStep(35,12), RecipeStep(75,12)
+    recipe = Recipe('test',3,32,1, step1, step2, step3)
     
     print(recipe.file_format())
 
@@ -252,6 +274,6 @@ if __name__=="__main__":
         if step:
             print(f"Step {num}")
             print(step.file_format())
-            
-    print(domaille_path())
+
     recipe.write()
+
