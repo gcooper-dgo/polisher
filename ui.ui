@@ -6,20 +6,609 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
+    <width>497</width>
     <height>670</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>129</y>
+      <width>471</width>
+      <height>421</height>
+     </rect>
+    </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Triangular</enum>
+    </property>
+    <property name="currentIndex">
+     <number>2</number>
+    </property>
+    <widget class="QWidget" name="step_1">
+     <attribute name="title">
+      <string>Step 1</string>
+     </attribute>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>371</width>
+        <height>282</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lbl_step_time">
+         <property name="text">
+          <string>Time (secs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="time">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>300</number>
+         </property>
+         <property name="value">
+          <number>75</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lbl_step_pressure">
+         <property name="text">
+          <string>Pressure total (lbs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="pressure">
+         <property name="maximum">
+          <double>16.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="lbl_step_pressure_2">
+         <property name="text">
+          <string>Pressure/contact (lbs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QDoubleSpinBox" name="pressure_per_contact">
+         <property name="maximum">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="lbl_step_film">
+         <property name="text">
+          <string>Film:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="cbo_film"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="lbl_step_pad">
+         <property name="text">
+          <string>Pad:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QComboBox" name="cbo_pad"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="lbl_step_lubricant">
+         <property name="text">
+          <string>Lubricant:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QComboBox" name="cbo_lubricant"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="lbl_step_desc1">
+         <property name="text">
+          <string>Description 1:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="desc1"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="lbl_step_desc2">
+         <property name="text">
+          <string>Description 2:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="desc2"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="lbl_step_speed">
+         <property name="text">
+          <string>Speed (RPM):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="speed">
+         <property name="maximum">
+          <number>120</number>
+         </property>
+         <property name="value">
+          <number>110</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="lbl_step_speed_ramp">
+         <property name="text">
+          <string>Speed Ramp (secs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QSpinBox" name="speed_ramp">
+         <property name="maximum">
+          <number>60</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="lbl_step_pressure_ramp">
+         <property name="text">
+          <string>Pressure Ramp (secs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QSpinBox" name="pressure_ramp">
+         <property name="maximum">
+          <number>60</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="step_2">
+     <attribute name="title">
+      <string>Step 2</string>
+     </attribute>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>371</width>
+        <height>282</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout_3">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lbl_step_time_2">
+         <property name="text">
+          <string>Time (secs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="time_2">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>300</number>
+         </property>
+         <property name="value">
+          <number>75</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lbl_step_pressure_3">
+         <property name="text">
+          <string>Pressure total (lbs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="pressure_2">
+         <property name="maximum">
+          <double>16.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="lbl_step_pressure_4">
+         <property name="text">
+          <string>Pressure/contact (lbs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QDoubleSpinBox" name="pressure_per_contact_2">
+         <property name="maximum">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="lbl_step_film_2">
+         <property name="text">
+          <string>Film:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="cbo_film_2"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="lbl_step_pad_2">
+         <property name="text">
+          <string>Pad:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QComboBox" name="cbo_pad_2"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="lbl_step_lubricant_2">
+         <property name="text">
+          <string>Lubricant:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QComboBox" name="cbo_lubricant_2"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="lbl_step_desc1_2">
+         <property name="text">
+          <string>Description 1:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="desc1_2"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="lbl_step_desc2_2">
+         <property name="text">
+          <string>Description 2:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="desc2_2"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="lbl_step_speed_2">
+         <property name="text">
+          <string>Speed (RPM):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="speed_2">
+         <property name="maximum">
+          <number>120</number>
+         </property>
+         <property name="value">
+          <number>110</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="lbl_step_speed_ramp_2">
+         <property name="text">
+          <string>Speed Ramp (secs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QSpinBox" name="speed_ramp_2">
+         <property name="maximum">
+          <number>60</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="lbl_step_pressure_ramp_2">
+         <property name="text">
+          <string>Pressure Ramp (secs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QSpinBox" name="pressure_ramp_2">
+         <property name="maximum">
+          <number>60</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="step_3">
+     <attribute name="title">
+      <string>Step 3</string>
+     </attribute>
+     <widget class="QWidget" name="layoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>371</width>
+        <height>282</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout_4">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lbl_step_time_3">
+         <property name="text">
+          <string>Time (secs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="time_3">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>300</number>
+         </property>
+         <property name="value">
+          <number>75</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lbl_step_pressure_5">
+         <property name="text">
+          <string>Pressure total (lbs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="pressure_3">
+         <property name="maximum">
+          <double>16.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="lbl_step_pressure_6">
+         <property name="text">
+          <string>Pressure/contact (lbs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QDoubleSpinBox" name="pressure_per_contact_3">
+         <property name="maximum">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="lbl_step_film_3">
+         <property name="text">
+          <string>Film:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="cbo_film_3"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="lbl_step_pad_3">
+         <property name="text">
+          <string>Pad:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QComboBox" name="cbo_pad_3"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="lbl_step_lubricant_3">
+         <property name="text">
+          <string>Lubricant:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QComboBox" name="cbo_lubricant_3"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="lbl_step_desc1_3">
+         <property name="text">
+          <string>Description 1:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="desc1_3"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="lbl_step_desc2_3">
+         <property name="text">
+          <string>Description 2:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="desc2_3"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="lbl_step_speed_3">
+         <property name="text">
+          <string>Speed (RPM):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="speed_3">
+         <property name="maximum">
+          <number>120</number>
+         </property>
+         <property name="value">
+          <number>110</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="lbl_step_speed_ramp_3">
+         <property name="text">
+          <string>Speed Ramp (secs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QSpinBox" name="speed_ramp_3">
+         <property name="maximum">
+          <number>60</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="lbl_step_pressure_ramp_3">
+         <property name="text">
+          <string>Pressure Ramp (secs):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QSpinBox" name="pressure_ramp_3">
+         <property name="maximum">
+          <number>60</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>10</y>
+      <width>281</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="lbl_description">
+       <property name="text">
+        <string>Description:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="description">
+       <property name="maxLength">
+        <number>24</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lbl_no_of_steps">
+       <property name="text">
+        <string>Number of Steps:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSpinBox" name="no_of_steps">
+       <property name="value">
+        <number>3</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lbl_quantity">
+       <property name="text">
+        <string>Max Contacts:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="quantity">
+       <property name="minimum">
+        <number>2</number>
+       </property>
+       <property name="maximum">
+        <number>72</number>
+       </property>
+       <property name="value">
+        <number>32</number>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lbl_description_4">
+       <property name="text">
+        <string>Rework Step:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QSpinBox" name="rework_step">
+       <property name="value">
+        <number>1</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>498</width>
+     <width>497</width>
      <height>21</height>
     </rect>
    </property>
@@ -30,6 +619,8 @@
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionCreate_Directory_Structure"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -50,16 +641,25 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>New...</string>
    </property>
   </action>
   <action name="actionOpen">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Open...</string>
    </property>
   </action>
   <action name="actionSave">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Save</string>
    </property>
@@ -83,6 +683,11 @@
    </property>
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionCreate_Directory_Structure">
+   <property name="text">
+    <string>Create Directory Structure</string>
    </property>
   </action>
  </widget>
